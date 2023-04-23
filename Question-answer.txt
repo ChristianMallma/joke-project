@@ -1,0 +1,24 @@
+# Questions
+¿Qué repositorio utilizarías?
+PostgreSQL, MariaDB, Casandra, MongoDB, ElasticSearch, Oracle, SQL Server
+
+1. Razona tu respuesta
+2. Crea la sentencia para crear la BBDD y el modelo de datos que requerirías
+3. Lo mismo que el punto anterior (si lo hiciste con una SQL) pero para un repositorio noSQL.
+
+
+# Answers
+1.
+MariaDB o PostgreSQL, porque soportan transacciones ACID y se ajusta a lo que se requiere en el proyecto.
+
+2.
+CREATE DATABASE nombre_basedatos;
+CREATE TABLE jokes (
+    id SERIAL PRIMARY KEY,
+    joke_description TEXT NOT NULL
+);
+
+3.
+Example in MongoDB
+- use joke_db
+- db.createCollections('jokes')
