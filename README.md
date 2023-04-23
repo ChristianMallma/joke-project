@@ -10,7 +10,7 @@ FastAPI - PostgreSQL
 # Python version
 Python 3.9.7
 
-# How run
+# How to run project
 1. Go to /src folder by terminal
 2. Create a virtual environment:  
 python -m venv my-env
