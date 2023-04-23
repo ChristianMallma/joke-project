@@ -1,0 +1,122 @@
+openapi: 3.0.0
+info:
+  title: Joke API
+  description: API to retrieve and manage jokes
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /get_joke:
+    get:
+      summary: Get a random joke or a joke of a specific type
+      tags: [Joke]
+      parameters:
+        - in: query
+          name: type
+          schema:
+            type: string
+          description: The type of joke to retrieve. Valid values are "Chuck" and "Dad".
+      responses:
+        '200':
+          description: The retrieved joke.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  joke:
+                    type: string
+        '400':
+          description: The specified joke type is not valid.
+        '404':
+          description: No joke found in database.
+        '500':
+          description: An error occurred while retrieving the joke.
+    post:
+      summary: Save a joke in the database.
+      tags: [Joke]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/jokes/entrypoint/schemas/joke/Joke'
+      responses:
+        '200':
+          description: Joke saved successfully!
+        '500':
+          description: An error occurred while saving the joke.
+  /update_joke/{number}:
+    put:
+      summary: Update a joke in the database
+      tags: [Joke]
+      parameters:
+        - in: path
+          name: number
+          schema:
+            type: integer
+          required: true
+          description: The id of the joke.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/jokes/entrypoint/schemas/joke/Joke'
+      responses:
+        '200':
+          description: The joke was updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/jokes/entrypoint/schemas/joke/Joke'
+        '404':
+          description: Joke with id {number} not found.
+        '500':
+          description: An error occurred while updating the joke.
+    delete:
+      summary: Delete a joke from the database.
+      tags: [Joke]
+      parameters:
+        - in: path
+          name: number
+          schema:
+            type: integer
+          required: true
+          description: The id of the joke to be deleted.
+      responses:
+        '200':
+          description: The joke was deleted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/jokes/entrypoint/schemas/joke/Joke'
+        '404':
+          description: Joke with id {number} not found.
+        '500':
+          description: An error occurred while deleting the joke.
+  /get_all_jokes:
+    get:
+      summary: Retrieve all jokes from the database.
+      tags: [Joke]
+      responses:
+        '200':
+          description: List of all jokes.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/jokes/entrypoint/schemas/joke/Joke'
+        '500':
+          description: An error occurred while retrieving jokes.
+
+components:
+  schemas:
+    Joke:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
